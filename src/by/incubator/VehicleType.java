@@ -1,3 +1,5 @@
+package by.incubator;
+
 public class VehicleType {
     private String typeName;
     private double taxCoefficient;

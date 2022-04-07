@@ -1,3 +1,9 @@
+package by.incubator;
+
+import by.incubator.engines.DieselEngine;
+import by.incubator.engines.ElectricalEngine;
+import by.incubator.engines.GasolineEngine;
+
 public class TechnicalSpecialist {
     public static final int LOWER_LIMIT_MANUFACTURE_YEAR = 1886;
 
@@ -45,5 +51,22 @@ public class TechnicalSpecialist {
 
     public static boolean validateModelName(String name) {
         return name != null && !name.equals("");
+    }
+
+    public static boolean validateGasolineEngine (GasolineEngine gasolineEngine) {
+        return gasolineEngine.getEngineCapacity() > 0 &&
+                gasolineEngine.getFuelConsumptionPer100() > 0 &&
+                gasolineEngine.getFuelTankCapacity() > 0;
+    }
+
+    public static boolean validateElectricalEngine (ElectricalEngine electricalEngine) {
+        return electricalEngine.getBatterySize() > 0 &&
+                electricalEngine.getElectricityConsumption() > 0;
+    }
+
+    public static boolean validateDieselEngine (DieselEngine dieselEngine) {
+        return dieselEngine.getEngineCapacity() > 0 &&
+                dieselEngine.getFuelConsumptionPer100() > 0 &&
+                dieselEngine.getFuelTankCapacity() > 0;
     }
 }

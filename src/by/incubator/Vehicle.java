@@ -1,3 +1,7 @@
+package by.incubator;
+
+import by.incubator.engines.Startable;
+
 public class Vehicle implements Comparable<Vehicle>{
     private final VehicleType vehicleType;
     private final String modelName;
@@ -7,9 +11,10 @@ public class Vehicle implements Comparable<Vehicle>{
     private int mileAge;
     private Colors color;
     private double tankLitres;
+    Startable engine;
 
     public Vehicle(VehicleType vehicleType, String modelName, String registrationNumber, int mass, int manufactureYear,
-                   int mileAge, Colors color) {
+                   int mileAge, Colors color, Startable engine) {
         if (TechnicalSpecialist.validateVehicleType(vehicleType)) {
             this.vehicleType = vehicleType;
         } else {
@@ -43,6 +48,8 @@ public class Vehicle implements Comparable<Vehicle>{
         if (TechnicalSpecialist.validateColor(color)) {
             this.color = color;
         }
+
+        this.engine = engine;
     }
 
     public VehicleType getVehicleType () {
@@ -57,8 +64,18 @@ public class Vehicle implements Comparable<Vehicle>{
         return registrationNumber;
     }
 
+    public Startable getEngine() {
+        return engine;
+    }
+
+    public void setEngine(Startable engine) {
+        this.engine = engine;
+    }
+
     public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber;
+        if (TechnicalSpecialist.validateRegistrationNumber(registrationNumber)) {
+            this.registrationNumber = registrationNumber;
+        }
     }
 
     public double getMass() {
@@ -66,7 +83,9 @@ public class Vehicle implements Comparable<Vehicle>{
     }
 
     public void setMass(int mass) {
-        this.mass = mass;
+        if (TechnicalSpecialist.validateWeight(mass)) {
+            this.mass = mass;
+        }
     }
 
     public int getManufactureYear() {
@@ -78,7 +97,9 @@ public class Vehicle implements Comparable<Vehicle>{
     }
 
     public void setMileAge(int mileAge) {
-        this.mileAge = mileAge;
+        if (TechnicalSpecialist.validateMileage(mileAge)) {
+            this.mileAge = mileAge;
+        }
     }
 
     public Colors getColor() {
@@ -94,17 +115,19 @@ public class Vehicle implements Comparable<Vehicle>{
     }
 
     public void setTankLitres(double tankLitres) {
-        this.tankLitres = tankLitres;
+        if (tankLitres > 0) {
+            this.tankLitres = tankLitres;
+        }
     }
 
     double getCalcTaxPerMonth() {
-        return mass * 0.0013 + vehicleType.getTaxCoefficient() * 30 + 5;
+        return mass * 0.0013 + engine.getTaxPerMonth() * vehicleType.getTaxCoefficient() * 30 + 5;
     }
 
     @Override
     public String toString() {
         return vehicleType.getTypeName() + "," + modelName + "," + registrationNumber + "," + mass + ","
-                + manufactureYear + "," + mileAge + "," + color + "," + getCalcTaxPerMonth(); //""
+                + manufactureYear + "," + mileAge + "," + color + "," + getCalcTaxPerMonth() + "," + engine.toString(); //""
     }
 
     @Override

@@ -1,3 +1,5 @@
+package by.incubator;
+
 public enum Colors {
     BLUE,
     WHITE,
