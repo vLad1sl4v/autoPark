@@ -121,7 +121,7 @@ public class Vehicle implements Comparable<Vehicle>{
     }
 
     double getCalcTaxPerMonth() {
-        return mass * 0.0013 + engine.getTaxPerMonth() * vehicleType.getTaxCoefficient() * 30 + 5;
+        return mass * 0.0013 + engine.getTaxPerMonth() * vehicleType.getTaxCoefficient() * 30 + 5; //round()
     }
 
     @Override
