@@ -85,8 +85,8 @@ public class autoParkDemo {
 
     static class Helper{
         static <T> void printArray(T[] arr) {
-            for (T arrEl : arr) {
-                System.out.println(arrEl);
+            for (int i = 0; i < arr.length; i++) {
+                    System.out.println(arr[i]);
             }
         }
     }

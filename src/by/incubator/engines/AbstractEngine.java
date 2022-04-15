@@ -26,6 +26,6 @@ public abstract class AbstractEngine implements Startable{
     }
 
     public String toString() {
-        return typeName + "," + typeTaxCoefficient;
+        return typeName + "," + "\"" + typeTaxCoefficient + "\"";
     }
 }
