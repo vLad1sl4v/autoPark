@@ -1,9 +1,16 @@
-package by.incubator;
+package by.incubator.vehicle;
 
+import by.incubator.Colors;
 import by.incubator.Exceptions.NotVehicleException;
+import by.incubator.Rent;
+import by.incubator.TechnicalSpecialist;
 import by.incubator.engines.Startable;
 
-public class Vehicle implements Comparable<Vehicle>{
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+public class Vehicle implements Comparable<Vehicle> {
     private /*final*/ VehicleType vehicleType;
     private /*final*/ String modelName;
     private String registrationNumber;
@@ -12,9 +19,11 @@ public class Vehicle implements Comparable<Vehicle>{
     private int mileAge;
     private Colors color;
     private double tankLitres;
+    private int id;
+    List<Rent> rents = new ArrayList<>();
     Startable engine;
 
-    public Vehicle(VehicleType vehicleType, String modelName, String registrationNumber, int mass, int manufactureYear,
+    public Vehicle(int id, VehicleType vehicleType, String modelName, String registrationNumber, int mass, int manufactureYear,
                    int mileAge, Colors color, Startable engine) {
         try {
             if (!TechnicalSpecialist.validateVehicleType(vehicleType)) {
@@ -59,6 +68,8 @@ public class Vehicle implements Comparable<Vehicle>{
                 this.color = color;
             }
 
+            this.id = id;
+
             this.engine = engine;
         } catch (NotVehicleException e) {
             System.out.println("Vehicle is not created.");
@@ -73,6 +84,14 @@ public class Vehicle implements Comparable<Vehicle>{
 
     public String getModelName() {
         return modelName;
+    }
+
+    public List<Rent> getRents() {
+        return rents;
+    }
+
+    public void setRents(List<Rent> rents) {
+        this.rents = rents;
     }
 
     public String getRegistrationNumber() {
@@ -93,7 +112,15 @@ public class Vehicle implements Comparable<Vehicle>{
         }
     }
 
-    public double getMass() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getMass() {
         return mass;
     }
 
@@ -107,7 +134,7 @@ public class Vehicle implements Comparable<Vehicle>{
         return manufactureYear;
     }
 
-    public double getMileAge() {
+    public int getMileAge() {
         return mileAge;
     }
 
@@ -135,12 +162,26 @@ public class Vehicle implements Comparable<Vehicle>{
         }
     }
 
-    double getCalcTaxPerMonth() {
+    public double getCalcTaxPerMonth() {
         double scale = Math.pow(10, 2);
         double result = mass * 0.0013 + engine.getTaxPerMonth() * vehicleType.getTaxCoefficient() * 30 + 5;
         result = Math.ceil(result * scale) / scale;
 
-        return result; //round()
+        return result;
+    }
+
+    public double getTotalIncome() {
+        double result = 0.0;
+
+        for (Rent rent : rents) {
+            result += rent.getRentCost();
+        }
+
+        return Math.ceil(result * 100) / 100;
+    }
+
+    public double getTotalProfit() {
+        return Math.ceil((getTotalIncome() - getCalcTaxPerMonth()) * 100) / 100;
     }
 
     @Override

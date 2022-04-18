@@ -3,6 +3,7 @@ package by.incubator;
 import by.incubator.engines.DieselEngine;
 import by.incubator.engines.ElectricalEngine;
 import by.incubator.engines.GasolineEngine;
+import by.incubator.vehicle.VehicleType;
 
 public class TechnicalSpecialist {
     public static final int LOWER_LIMIT_MANUFACTURE_YEAR = 1886;
