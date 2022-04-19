@@ -1,12 +1,8 @@
 package by.incubator;
 
-import by.incubator.engines.ElectricalEngine;
-import by.incubator.vehicle.Rent;
-import by.incubator.vehicle.Vehicle;
-import by.incubator.vehicle.VehicleCollection;
-import by.incubator.vehicle.VehicleType;
+import by.incubator.carWash.CarWashQueue;
+import by.incubator.vehicle.*;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class autoParkDemo {
@@ -21,31 +17,31 @@ public class autoParkDemo {
 
         vehicleCollection.display();
 
-        Vehicle vehicle = new Vehicle(8,new VehicleType(1, "Bus", 2.2),"Volkswagen Crafter","5427 AX-7",2022,2015,376000, Colors.BLUE,
-                new ElectricalEngine(1.2, 1.1));
+        CarWashQueue<Vehicle> queue = initCarWashQueue(vehicles);
+        washAllCars(queue);
 
-        vehicles.add(vehicle);
-        vehicleCollection.delete(1);
-        vehicleCollection.delete(4);
+        System.out.println(queue.size() + " Machines left in queue");
+    }
 
-        vehicleCollection.display();
+    static void washAllCars(CarWashQueue<Vehicle> queue) {
+        int size = queue.size();
 
-        vehicles.sort(new Comparator<Vehicle>() {
-            @Override
-            public int compare(Vehicle o1, Vehicle o2) {
-                int result = 0;
+        for (int i = 0; i < size; i++) {
+            washCar(queue);
+        }
+    }
 
-                if (o1.getManufactureYear() < o2.getManufactureYear()) {result = -1;}
-                else if (o1.getManufactureYear() > o2.getManufactureYear()) {result = 1;}
-                else {
-                    if (o1.getMileAge() < o2.getMileAge()) {result = -1;}
-                    if (o1.getMileAge() > o2.getMileAge()) {result = 1;}
-                }
-                return result;
-            }
-        });
+    static void washCar(CarWashQueue<Vehicle> queue) {
+        Vehicle washedCar = queue.dequeue();
 
-        vehicleCollection.display();
+        System.out.println(washedCar.getModelName() + " washed");
+    }
+
+
+    static CarWashQueue<Vehicle> initCarWashQueue(List<Vehicle> vehicles) {
+        Vehicle[] vehiclesArr = vehicles.toArray(new Vehicle[]{});
+
+        return new CarWashQueue<>(vehiclesArr);
     }
 
     static class Helper{
