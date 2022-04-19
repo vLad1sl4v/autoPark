@@ -1,4 +1,4 @@
-package by.incubator;
+package by.incubator.vehicle;
 
 import java.util.Date;
 

@@ -2,20 +2,18 @@ package by.incubator.vehicle;
 
 import by.incubator.Colors;
 import by.incubator.Exceptions.NotVehicleException;
-import by.incubator.Rent;
 import by.incubator.TechnicalSpecialist;
 import by.incubator.engines.Startable;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Vehicle implements Comparable<Vehicle> {
-    private /*final*/ VehicleType vehicleType;
-    private /*final*/ String modelName;
+    private VehicleType vehicleType;
+    private String modelName;
     private String registrationNumber;
     private int mass;
-    private /*final*/ int manufactureYear;
+    private int manufactureYear;
     private int mileAge;
     private Colors color;
     private double tankLitres;
@@ -187,7 +185,7 @@ public class Vehicle implements Comparable<Vehicle> {
     @Override
     public String toString() {
         return vehicleType.getTypeName() + "," + modelName + "," + registrationNumber + "," + mass + ","
-                + manufactureYear + "," + mileAge + "," + color + "," + "\"" + getCalcTaxPerMonth() + "\"" + "," + engine.toString(); //""
+                + manufactureYear + "," + mileAge + "," + color + "," + "\"" + getCalcTaxPerMonth() + "\"" + "," + engine.toString();
     }
 
     @Override

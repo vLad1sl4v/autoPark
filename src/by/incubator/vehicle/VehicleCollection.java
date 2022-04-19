@@ -1,7 +1,6 @@
 package by.incubator.vehicle;
 
 import by.incubator.Colors;
-import by.incubator.Rent;
 import by.incubator.engines.DieselEngine;
 import by.incubator.engines.ElectricalEngine;
 import by.incubator.engines.GasolineEngine;
