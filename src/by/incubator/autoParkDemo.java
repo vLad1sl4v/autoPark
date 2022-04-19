@@ -11,6 +11,7 @@ import java.util.List;
 
 public class autoParkDemo {
     public static void main(String[] args) {
+
         final String path = "./src/by/incubator/data/";
         VehicleCollection vehicleCollection = new VehicleCollection(path, path, path);
 
