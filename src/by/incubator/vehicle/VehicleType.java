@@ -1,13 +1,23 @@
-package by.incubator;
+package by.incubator.vehicle;
 
 public class VehicleType {
     private String typeName;
     private double taxCoefficient;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public VehicleType() {
     }
 
-    public VehicleType(String typeName, double taxCoefficient) {
+    public VehicleType(int id, String typeName, double taxCoefficient) {
+        this.id = id;
         this.typeName = typeName;
         this.taxCoefficient = taxCoefficient;
     }

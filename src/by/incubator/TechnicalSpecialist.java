@@ -3,6 +3,7 @@ package by.incubator;
 import by.incubator.engines.DieselEngine;
 import by.incubator.engines.ElectricalEngine;
 import by.incubator.engines.GasolineEngine;
+import by.incubator.vehicle.VehicleType;
 
 public class TechnicalSpecialist {
     public static final int LOWER_LIMIT_MANUFACTURE_YEAR = 1886;
@@ -28,23 +29,26 @@ public class TechnicalSpecialist {
     }
 
     static public boolean validateRegistrationNumber (String number) {
-        if (number == null || number.length() != 9) return false;
+        if (number != null) {
 
-        char[] charStr = number.toCharArray();
+            if (number.length() != 9) return false;
 
-        for (int i = 0; i < 4; i++) {
-            if (charStr[i] < '0' || charStr[i] > '9') return false;
+            char[] charStr = number.toCharArray();
+
+            for (int i = 0; i < 4; i++) {
+                if (charStr[i] < '0' || charStr[i] > '9') return false;
+            }
+
+            if (charStr[4] != ' ') return false;
+
+            for (int i = 5; i <= 6; i++) {
+                if (charStr[i] < 'A' || charStr[i] > 'Z') return false;
+            }
+
+            if (charStr[7] != '-') return false;
+
+            if (charStr[8] < '0' || charStr[8] > '9') return false;
         }
-
-        if (charStr[4] != ' ') return false;
-
-        for (int i = 5; i <= 6; i++) {
-            if (charStr[i] < 'A' || charStr[i] > 'Z') return false;
-        }
-
-        if (charStr[7] != '-') return false;
-
-        if (charStr[8] < '0' || charStr[8] > '9') return false;
 
         return true;
     }
