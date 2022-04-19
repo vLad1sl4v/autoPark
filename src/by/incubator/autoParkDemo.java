@@ -1,5 +1,6 @@
 package by.incubator;
 
+import by.incubator.carGarage.CarGarageStack;
 import by.incubator.engines.ElectricalEngine;
 import by.incubator.vehicle.Rent;
 import by.incubator.vehicle.Vehicle;
@@ -20,31 +21,35 @@ public class autoParkDemo {
 
         vehicleCollection.display();
 
-        Vehicle vehicle = new Vehicle(8,new VehicleType(1, "Bus", 2.2),"Volkswagen Crafter","5427 AX-7",2022,2015,376000, Colors.BLUE,
-                new ElectricalEngine(1.2, 1.1));
+        CarGarageStack<Vehicle> vehicleStack = fillInGarage(vehicles);
+        driveOutAllCars(vehicleStack);
+    }
 
-        vehicles.add(vehicle);
-        vehicleCollection.delete(1);
-        vehicleCollection.delete(4);
+    static void driveOutAllCars(CarGarageStack<Vehicle> vehicleStack) {
+        int size = vehicleStack.size();
 
-        vehicleCollection.display();
+        for (int i = 0; i < size; i++) {
+            driveOutCar(vehicleStack);
+        }
+    }
 
-        vehicles.sort(new Comparator<Vehicle>() {
-            @Override
-            public int compare(Vehicle o1, Vehicle o2) {
-                int result = 0;
+    static void driveOutCar(CarGarageStack<Vehicle> vehicleStack) {
+        Vehicle lastVehicle = vehicleStack.pop();
+        System.out.println(lastVehicle.getModelName() + " got out of garage");
+    }
 
-                if (o1.getManufactureYear() < o2.getManufactureYear()) {result = -1;}
-                else if (o1.getManufactureYear() > o2.getManufactureYear()) {result = 1;}
-                else {
-                    if (o1.getMileAge() < o2.getMileAge()) {result = -1;}
-                    if (o1.getMileAge() > o2.getMileAge()) {result = 1;}
-                }
-                return result;
-            }
-        });
+    static CarGarageStack<Vehicle> fillInGarage(List<Vehicle> vehicles) {
+        Vehicle[] vehiclesArr = vehicles.toArray(new Vehicle[0]);
+        CarGarageStack<Vehicle> stack = new CarGarageStack<>();
 
-        vehicleCollection.display();
+        for (int i = 0; i < vehiclesArr.length; i++) {
+            stack.push(vehiclesArr[i]);
+            System.out.println(vehiclesArr[i].getModelName() + " got in garage");
+        }
+
+        System.out.println("garage is filled");
+
+        return stack;
     }
 
     static class Helper{
