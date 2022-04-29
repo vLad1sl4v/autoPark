@@ -2,6 +2,7 @@ package by.incubator.vehicle;
 
 import by.incubator.Colors;
 import by.incubator.Exceptions.NotVehicleException;
+import by.incubator.Rent;
 import by.incubator.TechnicalSpecialist;
 import by.incubator.engines.Startable;
 
