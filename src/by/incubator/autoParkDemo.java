@@ -24,7 +24,6 @@ public class  autoParkDemo {
         washAllCars(queue);
 
         System.out.println(queue.size() + " Machines left in queue");
-
     }
 
     static CarWashQueue<Vehicle> initCarWashQueue(List<Vehicle> vehicles) {
@@ -44,6 +43,5 @@ public class  autoParkDemo {
         Vehicle washedCar = queue.dequeue();
         System.out.println(washedCar.getModelName() + " washed");
     }
-
 }
 
