@@ -6,9 +6,9 @@ import by.incubator.vehicle.*;
 import java.util.List;
 
 public class autoParkDemo {
-    public static void main(String[] args) {
+    static final String path = "./src/by/incubator/data/";
 
-        final String path = "./src/by/incubator/data/";
+    public static void main(String[] args) {
         VehicleCollection vehicleCollection = new VehicleCollection(path, path, path);
 
         List<VehicleType> vehicleTypes = vehicleCollection.loadTypes("types.csv");
