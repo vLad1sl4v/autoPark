@@ -1,9 +1,9 @@
 package by.incubator;
 
 import by.incubator.engines.ElectricalEngine;
-import by.incubator.vehicle.Rent;
+import by.incubator.Rent;
 import by.incubator.vehicle.Vehicle;
-import by.incubator.vehicle.VehicleCollection;
+import by.incubator.VehicleCollection;
 import by.incubator.vehicle.VehicleType;
 
 import java.util.Comparator;
