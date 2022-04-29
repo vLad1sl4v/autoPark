@@ -7,7 +7,7 @@ import by.incubator.vehicle.*;
 import java.util.List;
 import java.util.Queue;
 
-public class autoParkDemo {
+public class  autoParkDemo {
     private static final String path = "./src/by/incubator/data/";
     private static final String TYPES_PATH = "src/by/incubator/data/";
     private static final String VEHICLES_PATH = "src/by/incubator/data/";
