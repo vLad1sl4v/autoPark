@@ -1,17 +1,18 @@
 package by.incubator;
 
 import by.incubator.engines.ElectricalEngine;
-import by.incubator.vehicle.Rent;
+import by.incubator.Rent;
 import by.incubator.vehicle.Vehicle;
-import by.incubator.vehicle.VehicleCollection;
+import by.incubator.VehicleCollection;
 import by.incubator.vehicle.VehicleType;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class autoParkDemo {
+    static final String path = "./src/by/incubator/data/";
+
     public static void main(String[] args) {
-        final String path = "./src/by/incubator/data/";
         VehicleCollection vehicleCollection = new VehicleCollection(path, path, path);
 
         List<VehicleType> vehicleTypes = vehicleCollection.loadTypes("types.csv");
@@ -20,111 +21,38 @@ public class autoParkDemo {
 
         vehicleCollection.display();
 
-        Vehicle vehicle = new Vehicle(8,new VehicleType(1, "Bus", 2.2),"Volkswagen Crafter","5427 AX-7",2022,2015,376000, Colors.BLUE,
+        Vehicle vehicle1 = new Vehicle(8, new VehicleType(1, "Bus", 2.2), "Volkswagen Crafter", "5427 AX-7", 2022, 2015, 376000, Colors.BLUE,
+                new ElectricalEngine(1.2, 1.1));
+        Vehicle vehicle2 = new Vehicle(9, new VehicleType(1, "Bus", 2.2), "Volkswagen Crafter", "5427 AX-7", 2022, 2015, 376000, Colors.BLUE,
                 new ElectricalEngine(1.2, 1.1));
 
-        vehicles.add(vehicle);
-        vehicleCollection.delete(1);
-        vehicleCollection.delete(4);
+        detectBreakages(vehicleCollection);
+        repairAllVehicles(vehicleCollection);
 
-        vehicleCollection.display();
-
-        vehicles.sort(new Comparator<Vehicle>() {
-            @Override
-            public int compare(Vehicle o1, Vehicle o2) {
-                int result = 0;
-
-                if (o1.getManufactureYear() < o2.getManufactureYear()) {result = -1;}
-                else if (o1.getManufactureYear() > o2.getManufactureYear()) {result = 1;}
-                else {
-                    if (o1.getMileAge() < o2.getMileAge()) {result = -1;}
-                    if (o1.getMileAge() > o2.getMileAge()) {result = 1;}
-                }
-                return result;
-            }
-        });
-
-        vehicleCollection.display();
     }
 
-    static class Helper{
-        static <T> void printArray(T[] arr) {
-            for (int i = 0; i < arr.length; i++) {
-                    System.out.println(arr[i]);
+    private static void repairAllVehicles(VehicleCollection vehicleCollection) {
+        MechanicService mechanicService = new MechanicService();
+
+        for (Vehicle vehicle : vehicleCollection.getVehicles()) {
+            if (mechanicService.isBroken(vehicle)) {
+                mechanicService.repair(vehicle);
+                System.out.println("Repaired vehicle: " + vehicle);
             }
         }
     }
 
-    static Vehicle[] sortVehicles(Vehicle[] vehicles) {
-        Vehicle memory;
+    private static void detectBreakages(VehicleCollection vehicleCollection) {
+        MechanicService mechanicService = new MechanicService();
 
-        for (int i = 1; i < vehicles.length; i++) {
-            for (int j = 1; j < vehicles.length; j++) {
-                if (vehicles[j].compareTo(vehicles[j - 1]) < 0) {
-                    memory = vehicles[j - 1];
-                    vehicles[j - 1] = vehicles[j];
-                    vehicles[j] = memory;
-                }
+        for(Vehicle vehicle : vehicleCollection.getVehicles()) {
+            mechanicService.detectBreaking(vehicle);
+
+            if (!mechanicService.isBroken(vehicle)) {
+                System.out.println("Not broken vehicle: " + vehicle);
             }
         }
-
-        return vehicles;
-    }
-
-    static Vehicle getMaxAgeVehicle(Vehicle[] vehicles) {
-        Vehicle maxMileAgeVehicle = vehicles[0];
-
-        for (int i = 1; i < vehicles.length; i++) {
-            if (vehicles[i].getMileAge() > maxMileAgeVehicle.getMileAge()){
-                maxMileAgeVehicle = vehicles[i];
-            }
-        }
-
-        return maxMileAgeVehicle;
-    }
-
-    static Vehicle getMinAgeVehicle(Vehicle[] vehicles) {
-        Vehicle minMileAgeVehicle = vehicles[0];
-
-        for (int i = 1; i < vehicles.length; i++) {
-            if (vehicles[i].getMileAge() < minMileAgeVehicle.getMileAge()){
-                minMileAgeVehicle = vehicles[i];
-            }
-        }
-
-        return minMileAgeVehicle;
-    }
-
-    static void displayEqualVehicles(Vehicle[] vehicles) {
-        int equalCount = 0;
-
-        for (int i = 0; i < vehicles.length; i++) {
-            for (int j = i + 1; j < vehicles.length; j++) {
-                if (vehicles[i].equals(vehicles[j])) {
-                    equalCount++;
-
-                    System.out.println(vehicles[i] + "\n and \n" + vehicles[j]);
-                }
-            }
-        }
-
-        if (equalCount == 0) {
-            System.out.println("No equal vehicles");
-        }
-    }
-
-    static Vehicle findMaxKilometersVehicle(Vehicle[] vehicles) {
-        Vehicle maxKmVehicle = vehicles[0];
-
-        for (int i = 1; i < vehicles.length; i++) {
-            if (vehicles[i].getEngine().getMaxKilometers() > maxKmVehicle.getEngine().getMaxKilometers()) {
-                maxKmVehicle = vehicles[i];
-            }
-        }
-
-        return maxKmVehicle;
     }
 }
-
 
 
