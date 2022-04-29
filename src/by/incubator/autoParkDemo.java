@@ -2,9 +2,9 @@ package by.incubator;
 
 import by.incubator.carGarage.CarGarageStack;
 import by.incubator.engines.ElectricalEngine;
-import by.incubator.vehicle.Rent;
+import by.incubator.Rent;
 import by.incubator.vehicle.Vehicle;
-import by.incubator.vehicle.VehicleCollection;
+import by.incubator.VehicleCollection;
 import by.incubator.vehicle.VehicleType;
 
 import java.util.Comparator;
@@ -25,7 +25,7 @@ public class autoParkDemo {
         driveOutAllCars(vehicleStack);
     }
 
-    static void driveOutAllCars(CarGarageStack<Vehicle> vehicleStack) {
+    private static void driveOutAllCars(CarGarageStack<Vehicle> vehicleStack) {
         int size = vehicleStack.size();
 
         for (int i = 0; i < size; i++) {
@@ -33,12 +33,12 @@ public class autoParkDemo {
         }
     }
 
-    static void driveOutCar(CarGarageStack<Vehicle> vehicleStack) {
+    private static void driveOutCar(CarGarageStack<Vehicle> vehicleStack) {
         Vehicle lastVehicle = vehicleStack.pop();
         System.out.println(lastVehicle.getModelName() + " got out of garage");
     }
 
-    static CarGarageStack<Vehicle> fillInGarage(List<Vehicle> vehicles) {
+    private static CarGarageStack<Vehicle> fillInGarage(List<Vehicle> vehicles) {
         Vehicle[] vehiclesArr = vehicles.toArray(new Vehicle[0]);
         CarGarageStack<Vehicle> stack = new CarGarageStack<>();
 
@@ -60,7 +60,7 @@ public class autoParkDemo {
         }
     }
 
-    static Vehicle[] sortVehicles(Vehicle[] vehicles) {
+    private static Vehicle[] sortVehicles(Vehicle[] vehicles) {
         Vehicle memory;
 
         for (int i = 1; i < vehicles.length; i++) {
@@ -76,7 +76,7 @@ public class autoParkDemo {
         return vehicles;
     }
 
-    static Vehicle getMaxAgeVehicle(Vehicle[] vehicles) {
+    private static Vehicle getMaxAgeVehicle(Vehicle[] vehicles) {
         Vehicle maxMileAgeVehicle = vehicles[0];
 
         for (int i = 1; i < vehicles.length; i++) {
@@ -88,7 +88,7 @@ public class autoParkDemo {
         return maxMileAgeVehicle;
     }
 
-    static Vehicle getMinAgeVehicle(Vehicle[] vehicles) {
+    private static Vehicle getMinAgeVehicle(Vehicle[] vehicles) {
         Vehicle minMileAgeVehicle = vehicles[0];
 
         for (int i = 1; i < vehicles.length; i++) {
@@ -100,7 +100,7 @@ public class autoParkDemo {
         return minMileAgeVehicle;
     }
 
-    static void displayEqualVehicles(Vehicle[] vehicles) {
+    private static void displayEqualVehicles(Vehicle[] vehicles) {
         int equalCount = 0;
 
         for (int i = 0; i < vehicles.length; i++) {
@@ -118,7 +118,7 @@ public class autoParkDemo {
         }
     }
 
-    static Vehicle findMaxKilometersVehicle(Vehicle[] vehicles) {
+    private static Vehicle findMaxKilometersVehicle(Vehicle[] vehicles) {
         Vehicle maxKmVehicle = vehicles[0];
 
         for (int i = 1; i < vehicles.length; i++) {
