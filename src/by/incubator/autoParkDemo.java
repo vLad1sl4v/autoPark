@@ -1,135 +1,47 @@
 package by.incubator;
 
-import by.incubator.carGarage.CarGarageStack;
-import by.incubator.engines.ElectricalEngine;
-import by.incubator.Rent;
-import by.incubator.vehicle.Vehicle;
-import by.incubator.VehicleCollection;
-import by.incubator.vehicle.VehicleType;
-
-import java.util.Comparator;
+import by.incubator.carWash.CarWashQueue;
+import by.incubator.vehicle.*;
+import by.incubator.carWash.CarWashQueue;
+import by.incubator.vehicle.*;
 import java.util.List;
+import java.util.Queue;
 
-public class autoParkDemo {
+public class  autoParkDemo {
+    private static final String path = "./src/by/incubator/data/";
+    private static final String TYPES_PATH = "src/by/incubator/data/";
+    private static final String VEHICLES_PATH = "src/by/incubator/data/";
+    private static final String RENTS_PATH = "src/by/incubator/data/";
+
     public static void main(String[] args) {
-        final String path = "./src/by/incubator/data/";
         VehicleCollection vehicleCollection = new VehicleCollection(path, path, path);
 
         List<VehicleType> vehicleTypes = vehicleCollection.loadTypes("types.csv");
         List<Vehicle> vehicles = vehicleCollection.loadVehicles("vehicles.csv");
         List<Rent> rents = vehicleCollection.loadRents("rents.csv");
 
-        vehicleCollection.display();
+        CarWashQueue<Vehicle> queue = initCarWashQueue(vehicles);
+        washAllCars(queue);
 
-        CarGarageStack<Vehicle> vehicleStack = fillInGarage(vehicles);
-        driveOutAllCars(vehicleStack);
+        System.out.println(queue.size() + " Machines left in queue");
     }
 
-    private static void driveOutAllCars(CarGarageStack<Vehicle> vehicleStack) {
-        int size = vehicleStack.size();
+    static CarWashQueue<Vehicle> initCarWashQueue(List<Vehicle> vehicles) {
+        Vehicle[] vehiclesArr = vehicles.toArray(new Vehicle[]{});
 
+        return new CarWashQueue<>(vehiclesArr);
+    }
+
+    static void washAllCars(CarWashQueue<Vehicle> queue) {
+        int size = queue.size();
         for (int i = 0; i < size; i++) {
-            driveOutCar(vehicleStack);
+            washCar(queue);
         }
     }
 
-    private static void driveOutCar(CarGarageStack<Vehicle> vehicleStack) {
-        Vehicle lastVehicle = vehicleStack.pop();
-        System.out.println(lastVehicle.getModelName() + " got out of garage");
-    }
-
-    private static CarGarageStack<Vehicle> fillInGarage(List<Vehicle> vehicles) {
-        Vehicle[] vehiclesArr = vehicles.toArray(new Vehicle[0]);
-        CarGarageStack<Vehicle> stack = new CarGarageStack<>();
-
-        for (int i = 0; i < vehiclesArr.length; i++) {
-            stack.push(vehiclesArr[i]);
-            System.out.println(vehiclesArr[i].getModelName() + " got in garage");
-        }
-
-        System.out.println("garage is filled");
-
-        return stack;
-    }
-
-    static class Helper{
-        static <T> void printArray(T[] arr) {
-            for (int i = 0; i < arr.length; i++) {
-                    System.out.println(arr[i]);
-            }
-        }
-    }
-
-    private static Vehicle[] sortVehicles(Vehicle[] vehicles) {
-        Vehicle memory;
-
-        for (int i = 1; i < vehicles.length; i++) {
-            for (int j = 1; j < vehicles.length; j++) {
-                if (vehicles[j].compareTo(vehicles[j - 1]) < 0) {
-                    memory = vehicles[j - 1];
-                    vehicles[j - 1] = vehicles[j];
-                    vehicles[j] = memory;
-                }
-            }
-        }
-
-        return vehicles;
-    }
-
-    private static Vehicle getMaxAgeVehicle(Vehicle[] vehicles) {
-        Vehicle maxMileAgeVehicle = vehicles[0];
-
-        for (int i = 1; i < vehicles.length; i++) {
-            if (vehicles[i].getMileAge() > maxMileAgeVehicle.getMileAge()){
-                maxMileAgeVehicle = vehicles[i];
-            }
-        }
-
-        return maxMileAgeVehicle;
-    }
-
-    private static Vehicle getMinAgeVehicle(Vehicle[] vehicles) {
-        Vehicle minMileAgeVehicle = vehicles[0];
-
-        for (int i = 1; i < vehicles.length; i++) {
-            if (vehicles[i].getMileAge() < minMileAgeVehicle.getMileAge()){
-                minMileAgeVehicle = vehicles[i];
-            }
-        }
-
-        return minMileAgeVehicle;
-    }
-
-    private static void displayEqualVehicles(Vehicle[] vehicles) {
-        int equalCount = 0;
-
-        for (int i = 0; i < vehicles.length; i++) {
-            for (int j = i + 1; j < vehicles.length; j++) {
-                if (vehicles[i].equals(vehicles[j])) {
-                    equalCount++;
-
-                    System.out.println(vehicles[i] + "\n and \n" + vehicles[j]);
-                }
-            }
-        }
-
-        if (equalCount == 0) {
-            System.out.println("No equal vehicles");
-        }
-    }
-
-    private static Vehicle findMaxKilometersVehicle(Vehicle[] vehicles) {
-        Vehicle maxKmVehicle = vehicles[0];
-
-        for (int i = 1; i < vehicles.length; i++) {
-            if (vehicles[i].getEngine().getMaxKilometers() > maxKmVehicle.getEngine().getMaxKilometers()) {
-                maxKmVehicle = vehicles[i];
-            }
-        }
-
-        return maxKmVehicle;
+    static void washCar(CarWashQueue<Vehicle> queue) {
+        Vehicle washedCar = queue.dequeue();
+        System.out.println(washedCar.getModelName() + " washed");
     }
 }
-
-
 
