@@ -1,11 +1,11 @@
-package by.incubator.vehicle;
+package by.incubator;
 
-import by.incubator.Colors;
-import by.incubator.Rent;
 import by.incubator.engines.DieselEngine;
 import by.incubator.engines.ElectricalEngine;
 import by.incubator.engines.GasolineEngine;
 import by.incubator.engines.Startable;
+import by.incubator.vehicle.Vehicle;
+import by.incubator.vehicle.VehicleType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VehicleCollection {
-    List<VehicleType> vehicleTypes;
-    List<Vehicle> vehicles;
+    private List<VehicleType> vehicleTypes;
+    private List<Vehicle> vehicles;
 
     private String rentsPath;
     private String typesPath;
@@ -313,5 +313,9 @@ public class VehicleCollection {
         }
 
         System.out.printf("%5s %119.2f\n", "Total", sumTotalProfit());
+    }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
     }
 }
