@@ -1,5 +1,6 @@
 package by.incubator;
 
+
 import by.incubator.engines.ElectricalEngine;
 import by.incubator.Rent;
 import by.incubator.vehicle.Vehicle;
@@ -7,10 +8,20 @@ import by.incubator.VehicleCollection;
 import by.incubator.vehicle.VehicleType;
 
 import java.util.Comparator;
+
 import java.util.List;
+import java.util.Queue;
+
+public class  autoParkDemo {
+    private static final String path = "./src/by/incubator/data/";
+    private static final String TYPES_PATH = "src/by/incubator/data/";
+    private static final String VEHICLES_PATH = "src/by/incubator/data/";
+    private static final String RENTS_PATH = "src/by/incubator/data/";
+
 
 public class autoParkDemo {
     static final String path = "./src/by/incubator/data/";
+
 
     public static void main(String[] args) {
         VehicleCollection vehicleCollection = new VehicleCollection(path, path, path);
@@ -18,6 +29,7 @@ public class autoParkDemo {
         List<VehicleType> vehicleTypes = vehicleCollection.loadTypes("types.csv");
         List<Vehicle> vehicles = vehicleCollection.loadVehicles("vehicles.csv");
         List<Rent> rents = vehicleCollection.loadRents("rents.csv");
+
 
         vehicleCollection.display();
 
@@ -54,5 +66,3 @@ public class autoParkDemo {
         }
     }
 }
-
-
