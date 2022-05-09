@@ -18,11 +18,6 @@ public class  autoParkDemo {
     private static final String VEHICLES_PATH = "src/by/incubator/data/";
     private static final String RENTS_PATH = "src/by/incubator/data/";
 
-
-public class autoParkDemo {
-    static final String path = "./src/by/incubator/data/";
-
-
     public static void main(String[] args) {
         VehicleCollection vehicleCollection = new VehicleCollection(path, path, path);
 
@@ -30,17 +25,8 @@ public class autoParkDemo {
         List<Vehicle> vehicles = vehicleCollection.loadVehicles("vehicles.csv");
         List<Rent> rents = vehicleCollection.loadRents("rents.csv");
 
-
-        vehicleCollection.display();
-
-        Vehicle vehicle1 = new Vehicle(8, new VehicleType(1, "Bus", 2.2), "Volkswagen Crafter", "5427 AX-7", 2022, 2015, 376000, Colors.BLUE,
-                new ElectricalEngine(1.2, 1.1));
-        Vehicle vehicle2 = new Vehicle(9, new VehicleType(1, "Bus", 2.2), "Volkswagen Crafter", "5427 AX-7", 2022, 2015, 376000, Colors.BLUE,
-                new ElectricalEngine(1.2, 1.1));
-
         detectBreakages(vehicleCollection);
         repairAllVehicles(vehicleCollection);
-
     }
 
     private static void repairAllVehicles(VehicleCollection vehicleCollection) {
