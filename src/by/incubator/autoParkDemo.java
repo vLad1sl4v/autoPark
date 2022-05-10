@@ -1,9 +1,14 @@
 package by.incubator;
 
-import by.incubator.carWash.CarWashQueue;
-import by.incubator.vehicle.*;
-import by.incubator.carWash.CarWashQueue;
-import by.incubator.vehicle.*;
+
+import by.incubator.engines.ElectricalEngine;
+import by.incubator.Rent;
+import by.incubator.vehicle.Vehicle;
+import by.incubator.VehicleCollection;
+import by.incubator.vehicle.VehicleType;
+
+import java.util.Comparator;
+
 import java.util.List;
 import java.util.Queue;
 
@@ -20,28 +25,30 @@ public class  autoParkDemo {
         List<Vehicle> vehicles = vehicleCollection.loadVehicles("vehicles.csv");
         List<Rent> rents = vehicleCollection.loadRents("rents.csv");
 
-        CarWashQueue<Vehicle> queue = initCarWashQueue(vehicles);
-        washAllCars(queue);
-
-        System.out.println(queue.size() + " Machines left in queue");
+        detectBreakages(vehicleCollection);
+        repairAllVehicles(vehicleCollection);
     }
 
-    static CarWashQueue<Vehicle> initCarWashQueue(List<Vehicle> vehicles) {
-        Vehicle[] vehiclesArr = vehicles.toArray(new Vehicle[]{});
+    private static void repairAllVehicles(VehicleCollection vehicleCollection) {
+        MechanicService mechanicService = new MechanicService();
 
-        return new CarWashQueue<>(vehiclesArr);
-    }
-
-    static void washAllCars(CarWashQueue<Vehicle> queue) {
-        int size = queue.size();
-        for (int i = 0; i < size; i++) {
-            washCar(queue);
+        for (Vehicle vehicle : vehicleCollection.getVehicles()) {
+            if (mechanicService.isBroken(vehicle)) {
+                mechanicService.repair(vehicle);
+                System.out.println("Repaired vehicle: " + vehicle);
+            }
         }
     }
 
-    static void washCar(CarWashQueue<Vehicle> queue) {
-        Vehicle washedCar = queue.dequeue();
-        System.out.println(washedCar.getModelName() + " washed");
+    private static void detectBreakages(VehicleCollection vehicleCollection) {
+        MechanicService mechanicService = new MechanicService();
+
+        for(Vehicle vehicle : vehicleCollection.getVehicles()) {
+            mechanicService.detectBreaking(vehicle);
+
+            if (!mechanicService.isBroken(vehicle)) {
+                System.out.println("Not broken vehicle: " + vehicle);
+            }
+        }
     }
 }
-
