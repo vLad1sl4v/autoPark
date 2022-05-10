@@ -1,13 +1,14 @@
 package by.incubator;
 
+import by.incubator.Exceptions.NotVehicleException;
 import by.incubator.engines.Startable;
 
 public class Vehicle implements Comparable<Vehicle>{
-    private final VehicleType vehicleType;
-    private final String modelName;
+    private VehicleType vehicleType;
+    private String modelName;
     private String registrationNumber;
     private int mass;
-    private final int manufactureYear;
+    private int manufactureYear;
     private int mileAge;
     private Colors color;
     private double tankLitres;
@@ -15,41 +16,55 @@ public class Vehicle implements Comparable<Vehicle>{
 
     public Vehicle(VehicleType vehicleType, String modelName, String registrationNumber, int mass, int manufactureYear,
                    int mileAge, Colors color, Startable engine) {
-        if (TechnicalSpecialist.validateVehicleType(vehicleType)) {
-            this.vehicleType = vehicleType;
-        } else {
-            this.vehicleType = new VehicleType();
-        }
+        try {
+            if (!TechnicalSpecialist.validateVehicleType(vehicleType)) {
+                throw new NotVehicleException("Vehicle Type: " + vehicleType);
+            } else {
+                this.vehicleType = vehicleType;
+            }
 
-        if (TechnicalSpecialist.validateModelName(modelName)) {
-            this.modelName = modelName;
-        } else {
-            this.modelName = "Default model";
-        }
+            if (!TechnicalSpecialist.validateModelName(modelName)) {
+                throw new NotVehicleException("Model name: " + modelName);
+            } else {
+                this.modelName = modelName;
+            }
 
-        if (TechnicalSpecialist.validateRegistrationNumber(registrationNumber)) {
-            this.registrationNumber = registrationNumber;
-        }
+            if (!TechnicalSpecialist.validateRegistrationNumber(registrationNumber)) {
+                throw new NotVehicleException("Registration number: " + registrationNumber);
+            } else {
+                this.registrationNumber = registrationNumber;
+            }
 
-        if (TechnicalSpecialist.validateWeight(mass)) {
-            this.mass = mass;
-        }
+            if (!TechnicalSpecialist.validateWeight(mass)) {
+                throw new NotVehicleException("Mass " + mass);
+            } else {
+                this.mass = mass;
+            }
 
-        if (TechnicalSpecialist.validateManufactureYear(manufactureYear)) {
-            this.manufactureYear = manufactureYear;
-        } else {
-            this.manufactureYear = TechnicalSpecialist.LOWER_LIMIT_MANUFACTURE_YEAR;
-        }
+            if (!TechnicalSpecialist.validateManufactureYear(manufactureYear)) {
+                throw new NotVehicleException("Manufacture year: " + manufactureYear);
+            } {
+                this.manufactureYear = manufactureYear;
+            }
 
-        if (TechnicalSpecialist.validateMileage(mileAge)) {
-            this.mileAge = mileAge;
-        }
+            if (!TechnicalSpecialist.validateMileage(mileAge)) {
+                throw new NotVehicleException("Mile age: " + mileAge);
+            } else {
+                this.mileAge = mileAge;
+            }
 
-        if (TechnicalSpecialist.validateColor(color)) {
-            this.color = color;
-        }
+            if (!TechnicalSpecialist.validateColor(color)) {
+                throw new NotVehicleException("Color: " + color);
+            } else {
+                this.color = color;
+            }
 
-        this.engine = engine;
+            this.engine = engine;
+        } catch (NotVehicleException e) {
+            System.out.println("Vehicle is not created.");
+            System.out.println(e.getMessage());
+            e.getStackTrace();
+        }
     }
 
     public VehicleType getVehicleType () {
@@ -121,13 +136,17 @@ public class Vehicle implements Comparable<Vehicle>{
     }
 
     double getCalcTaxPerMonth() {
-        return mass * 0.0013 + engine.getTaxPerMonth() * vehicleType.getTaxCoefficient() * 30 + 5; //round()
+        double scale = Math.pow(10, 2);
+        double result = mass * 0.0013 + engine.getTaxPerMonth() * vehicleType.getTaxCoefficient() * 30 + 5;
+        result = Math.ceil(result * scale) / scale;
+
+        return result; //round()
     }
 
     @Override
     public String toString() {
         return vehicleType.getTypeName() + "," + modelName + "," + registrationNumber + "," + mass + ","
-                + manufactureYear + "," + mileAge + "," + color + "," + getCalcTaxPerMonth() + "," + engine.toString(); //""
+                + manufactureYear + "," + mileAge + "," + color + "," + "\"" + getCalcTaxPerMonth() + "\"" + "," + engine.toString(); //""
     }
 
     @Override
